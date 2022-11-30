@@ -13,6 +13,6 @@ app.listen({
     port: 5000,
 }, async () => {
     console.log('server running on port 5000')
-    await sequelize.sync({ alter: true });
-    console.log('database synced!')
+    await sequelize.authenticate();
+    console.log('database Connected!')
 })

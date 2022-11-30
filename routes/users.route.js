@@ -20,5 +20,7 @@ userRouter.post('/',
     //     .withMessage('Your Request should include role'),
     userController.addUser
 )
+userRouter.get('/', userController.getAllUsers)
+userRouter.get('/:id', userController.getUserById)
 
 module.exports = userRouter
