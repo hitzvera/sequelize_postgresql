@@ -42,9 +42,53 @@ const getUserById = async (req,res) => {
     const uuid = req.params.id
     try{
         const user = await User.findOne({
-            where: { uuid }
+            where: { uuid },
+            include: ['posts'],
         })
         return res.status(200).json(user)
+    } catch(error) {
+        console.log(error)
+        return res.status(500).json({
+            error: true,
+            message: error,
+        })
+    }
+}
+
+const deleteUserById = async (req,res) => {
+    const uuid = req.params.id
+    try{
+        const user = await User.findOne({
+            where: { uuid },
+        })
+        await user.destroy()
+        return res.status(200).json({message: "user has been deleted!"})
+    } catch(error) {
+        console.log(error)
+        return res.status(500).json({
+            error: true,
+            message: error,
+        })
+    }
+}
+
+const editUserById = async (req,res) => {
+    const uuid = req.params.id
+    const { name, email, role } = req.body
+    try{
+        const user = await User.findOne({
+            where: { uuid },
+        })
+        user.name = name
+        user.email = email
+        user.role = role
+
+        await user.save()
+        return res.json({
+            error: false,
+            message: "user has been edited",
+            user,
+        })
     } catch(error) {
         console.log(error)
         return res.status(500).json({
@@ -57,5 +101,7 @@ const getUserById = async (req,res) => {
 module.exports = {
     addUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    editUserById,
+    deleteUserById
 }

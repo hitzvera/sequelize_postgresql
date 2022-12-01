@@ -18,6 +18,15 @@ const addPost = async (req,res) => {
     }
 }
 
+const getAllPosts = async (req,res) => {
+    try{
+        const posts = await Post.findAll({ include: ['user']})
+        return res.json(posts)
+    } catch(error) {
+        return res.status(500).json(error)
+    }
+}
+
 const getAllPostFromUserId = async (req,res) => {
     const userId = req.params.userId
     try {
@@ -36,6 +45,7 @@ const getAllPostFromUserId = async (req,res) => {
 
 module.exports = {
     addPost,
-    getAllPostFromUserId
+    getAllPostFromUserId,
+    getAllPosts
 }
 
