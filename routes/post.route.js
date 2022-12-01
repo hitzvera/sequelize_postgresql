@@ -4,5 +4,6 @@ const postController = require('../controller/post.controller')
 const postRouter = Router()
 
 postRouter.post('/', postController.addPost)
+postRouter.get('/:userId', postController.getAllPostFromUserId)
 
 module.exports = postRouter
